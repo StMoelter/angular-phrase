@@ -1,6 +1,43 @@
 (function() {
   var phrase;
 
+  phrase = angular.module("phrase");
+
+  phrase.config([
+    "$compileProvider", function($compileProvider) {
+      return $compileProvider.directive('translate', [
+        "phraseEnabled", "phraseDecoratorPrefix", "phraseDecoratorSuffix", function(phraseEnabled, phraseDecoratorPrefix, phraseDecoratorSuffix) {
+          if (phraseEnabled) {
+            return {
+              priority: 1001,
+              terminal: true,
+              restrict: 'AE',
+              scope: true,
+              compile: function(ele, attr) {
+                var newString, tString;
+                tString = ele.attr('translate');
+                newString = "" + phraseDecoratorPrefix + "phrase_" + tString + phraseDecoratorSuffix;
+                if (attr.translateValues) {
+                  newString += " (" + attr.translateValues + ")";
+                }
+                ele.html(newString);
+                return ele.removeAttr('translate');
+              }
+            };
+          } else {
+            console.log('phrase off');
+            return {};
+          }
+        }
+      ]);
+    }
+  ]);
+
+}).call(this);
+
+(function() {
+  var phrase;
+
   phrase = angular.module("phrase", ['pascalprecht.translate', 'ng']);
 
   phrase.value("phraseAuthToken", "");
