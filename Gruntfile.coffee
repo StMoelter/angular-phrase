@@ -13,10 +13,11 @@ module.exports = (grunt) ->
         files:
           'build/phrase.js': 'src/phrase.coffee'
           'build/directives/phrase_javascript.js': 'src/directives/phrase_javascript.coffee'
+          'build/provider/phrase_javascript.js': 'src/provider/phrase_javascript.coffee'
 
     concat:
       core:
-        src: ['build/phrase.js', 'build/directives/phrase_javascript.js']
+        src: ['build/provider/phrase_javascript.js', 'build/phrase.js', 'build/directives/phrase_javascript.js']
         dest: '<%= build_dir %>/angular-phrase.js'
 
     karma:
