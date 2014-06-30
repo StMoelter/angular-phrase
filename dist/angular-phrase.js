@@ -27,13 +27,6 @@
     }
   ]);
 
-}).call(this);
-
-(function() {
-  var phrase;
-
-  phrase = angular.module("phrase", ['pascalprecht.translate', 'ng']);
-
   phrase.config([
     "$compileProvider", function($compileProvider) {
       return $compileProvider.directive('translate', [
