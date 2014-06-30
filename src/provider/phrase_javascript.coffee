@@ -1,4 +1,4 @@
-phrase = angular.module "phrase"
+phrase = angular.module "phrase", ['pascalprecht.translate', 'ng']
 
 phrase.config ["$compileProvider", ($compileProvider) ->
   $compileProvider.directive 'translate', ["phraseEnabled", "phraseDecoratorPrefix", "phraseDecoratorSuffix",
