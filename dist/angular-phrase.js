@@ -1,7 +1,38 @@
 (function() {
   var phrase;
 
-  phrase = angular.module("phrase");
+  phrase = angular.module("phrase", ['pascalprecht.translate', 'ng']);
+
+  phrase.value("phraseAuthToken", "");
+
+  phrase.value("phraseEnabled", true);
+
+  phrase.value("phraseDecoratorPrefix", "{{__");
+
+  phrase.value("phraseDecoratorSuffix", "__}}");
+
+  phrase.config([
+    "$provide", function($provide) {
+      return $provide.decorator("$translate", [
+        "$delegate", "phraseEnabled", "phraseDecoratorPrefix", "phraseDecoratorSuffix", function($translate, phraseEnabled, phraseDecoratorPrefix, phraseDecoratorSuffix) {
+          if (phraseEnabled) {
+            $translate._instant = $translate.instant;
+            $translate.instant = function(translationId, interpolateParams, interpolationId) {
+              return "" + phraseDecoratorPrefix + "phrase_" + translationId + phraseDecoratorSuffix;
+            };
+          }
+          return $translate;
+        }
+      ]);
+    }
+  ]);
+
+}).call(this);
+
+(function() {
+  var phrase;
+
+  phrase = angular.module("phrase", ['pascalprecht.translate', 'ng']);
 
   phrase.config([
     "$compileProvider", function($compileProvider) {
@@ -25,40 +56,8 @@
               }
             };
           } else {
-            console.log('phrase off');
             return {};
           }
-        }
-      ]);
-    }
-  ]);
-
-}).call(this);
-
-(function() {
-  var phrase;
-
-  phrase = angular.module("phrase", ['pascalprecht.translate', 'ng']);
-
-  phrase.value("phraseAuthToken", "");
-
-  phrase.value("phraseEnabled", true);
-
-  phrase.value("phraseDecoratorPrefix", "{{__");
-
-  phrase.value("phraseDecoratorSuffix", "__}}");
-
-  phrase.config([
-    "$provide", function($provide) {
-      return $provide.decorator("$translate", [
-        "$delegate", "phraseEnabled", "phraseDecoratorPrefix", "phraseDecoratorSuffix", function($translate, phraseEnabled, phraseDecoratorPrefix, phraseDecoratorSuffix) {
-          if (phraseEnabled) {
-            $translate._instant = $translate.instant;
-            $translate.instant = function(translationId, interpolateParams, interpolationId) {
-              return "" + phraseDecoratorPrefix + "phrase_" + translationId + phraseDecoratorSuffix;
-            };
-          }
-          return $translate;
         }
       ]);
     }
