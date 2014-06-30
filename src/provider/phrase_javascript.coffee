@@ -20,8 +20,6 @@ phrase.config ["$compileProvider", ($compileProvider) ->
             ele.removeAttr('translate')
         }
       else
-        console.log('phrase off')
         return {}
-
   ]
 ]
