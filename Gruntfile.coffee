@@ -17,7 +17,7 @@ module.exports = (grunt) ->
 
     concat:
       core:
-        src: ['build/phrase.js', 'build/provider/phrase_javascript.js', 'build/directives/phrase_javascript.js']
+        src: ['build/phrase.js', 'build/directives/phrase_javascript.js']
         dest: '<%= build_dir %>/angular-phrase.js'
 
     karma:
